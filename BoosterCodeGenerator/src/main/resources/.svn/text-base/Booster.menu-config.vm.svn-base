@@ -1,2 +1,0 @@
-    <Menu name="${Entity}Menu" title="${entity}List.title" page="/${entities}.html"/>
-    </Menus>
