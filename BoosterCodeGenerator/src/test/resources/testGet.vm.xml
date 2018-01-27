@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template-data>
+    <hits>1</hits>
+    <template-name>testGet</template-name>
+    <description>esta es otra descripcion</description>
+      <tags xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:java="http://java.sun.com" xsi:type="java:com.hexacta.booster.codegeneration.template.model.Tag">
+        <name>eclipse</name>
+    </tags>
+    <category>
+        <name>booster2</name>
+    </category>
+    <meta-variables
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:java="http://java.sun.com" xsi:type="java:com.hexacta.booster.codegeneration.template.model.MetaVariable">
+        <default-value>a</default-value>
+        <name>c</name>
+        <meaning>b</meaning>
+    </meta-variables>
+</template-data>

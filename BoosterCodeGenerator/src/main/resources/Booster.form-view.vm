@@ -1,0 +1,59 @@
+#set($dateExists = false)
+#set($pesos = "$")
+<%@ include file="/common/taglibs.jsp"%>
+	
+<head>
+    <title><fmt:message key="${entity}Detail.title"/></title>
+    <meta name="heading" content="<fmt:message key='${entity}Detail.heading'/>"/>
+</head>
+	
+<s:form id="${entity}Form" action="save${Entity}" method="post" validate="true">
+	
+#foreach ($field in ${fields})
+#if ($field.getName() == "id")
+	#set($idFieldName = $field.getName())
+    <li style="display: none">
+        <s:hidden key="${entity}.$field.getName()"/>
+    </li>    
+#elseif (!${field.isCollection()} && !${field.isManyToOne()})    
+    #if ($field.getType().getName() == "java.util.Date")
+        #set ($dateExists = true)
+    <s:textfield key="${entity}.$field.getName()" required="true" maxlength="255" cssClass="text" size="11" title="date"/>
+    #elseif (($field.getType().getName() == "boolean") || ($field.getType().getName() == "java.lang.Boolean"))
+    <li>
+    <s:checkbox key="${entity}.$field.getName()" cssClass="checkbox" theme="simple"/>
+    <!-- For some reason, key prints out the raw value for the label (i.e. true) instead of the i18n key: https://issues.apache.org/struts/browse/WW-1958-->
+    <s:label for="${entity}Form_${entity}_$field.getName()" value="%{getText('${entity}.$field.getName()')}" cssClass="choice desc" theme="simple"/>
+    </li>
+    #else
+    <s:textfield key="${entity}.$field.getName()" required="true" maxlength="255" cssClass="text medium"/>
+    #end    
+#elseif (${field.isManyToOne()})    
+    <!--
+	<s:select key="${entity}.${field.getName()}.id" name="${entity}.${field.getName()}.id"
+		value="%{${entity}.${field.getName()}.id.toString()}" list="${field.getName()}List" listKey="id" listValue="id"></s:select>
+	-->
+#end
+#end
+	<li class="buttonBar bottom">
+    <s:submit cssClass="button" method="save" key="button.save" theme="simple"/>
+    <c:if test="${pesos}{not empty ${entity}.${idFieldName}}">
+        <s:submit cssClass="button" method="delete" key="button.delete"
+            onclick="return confirmDelete('${Entity}')" theme="simple"/>
+    </c:if>
+    <s:submit cssClass="button" method="cancel" key="button.cancel" theme="simple"/>
+    </li>
+</s:form>	
+#if ($dateExists)
+<script type="text/javascript" src="<c:url value='/scripts/calendar/calendar.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/scripts/calendar/calendar-setup.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/scripts/calendar/lang/calendar-en.js'/>"></script>
+#end
+<script type="text/javascript">
+    Form.focusFirstElement($("${entity}Form"));
+#foreach ($field in ${fields})
+#if ($field.getType().getName() == "java.util.Date")
+    Calendar.setup({inputField: "${entity}Form_${entity}_$field.getName()", ifFormat: "%m/%d/%Y", button: "${entity}.$field.getName()DatePicker"});
+#end
+#end
+</script>

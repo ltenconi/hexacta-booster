@@ -1,0 +1,89 @@
+package ${groupId}.webapp.action;
+
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
+import org.dynadto.Builder;
+import ${intefaceServicePackage}.${interfaceServiceClassName};
+import ${intefaceDtoPackage}.${interfaceDtoClass};
+import ${groupId}.webapp.action.BaseActionTestCase;
+import org.springframework.mock.web.MockHttpServletRequest;
+
+public class ${entityClassName}ActionTest extends BaseActionTestCase {
+    
+    private ${entityClassName}Action action;
+    
+    private ${interfaceServiceClassName} ${entityClassNameLowerCase}DTO;
+
+    @Override 
+    protected void onSetUpBeforeTransaction() throws Exception {
+        super.onSetUpBeforeTransaction();
+        action = new ${entityClassName}Action();
+        ${interfaceServiceClassName} ${entityClassNameLowerCase}Service = (${interfaceServiceClassName}) applicationContext.getBean("service.${entityClassNameLowerCase}Service");
+        action.set${entityClassName}Service(${entityClassNameLowerCase}Service);
+        
+        // add a test ${entityClassNameLowerCase} to the database
+        Builder<${interfaceServiceClassName}> builder = factory.getBuilder(${interfaceServiceClassName}.class);
+        ${entityClassNameLowerCase}DTO = builder.build();
+
+        // enter all required fields
+        ${entityClassNameLowerCase}DTO.setAge(890294956);
+
+        ${entityClassNameLowerCase}Service.add(${entityClassNameLowerCase}DTO);
+    }
+
+    public void testSearch() throws Exception {
+        assertEquals(action.list(), ActionSupport.SUCCESS);
+        assertTrue(action.get${entityClassName}s().size() >= 1);
+    }
+
+    public void testEdit() throws Exception {
+        log.debug("testing edit...");
+        
+        action.setId(${entityClassNameLowerCase}DTO.getId());
+        
+        //assertNull(action.get${entityClassName}());
+        assertEquals("success", action.edit());
+        assertNotNull(action.get${entityClassName}());
+        assertFalse(action.hasActionErrors());
+    }
+
+    public void testSave() throws Exception {
+        
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        ServletActionContext.setRequest(request);
+               
+        action.setId(${entityClassNameLowerCase}DTO.getId());
+        action.set${entityClassName}(${entityClassNameLowerCase}DTO);
+        
+        assertEquals("success", action.edit());
+        assertNotNull(action.get${entityClassName}());
+
+        ${interfaceServiceClassName} ${entityClassNameLowerCase} = action.get${entityClassName}();
+        // update required fields
+        ${entityClassNameLowerCase}.setAge(667710055);
+
+        action.set${entityClassName}(${entityClassNameLowerCase});
+
+        assertEquals("input", action.save());
+        assertFalse(action.hasActionErrors());
+        assertFalse(action.hasFieldErrors());
+        assertNotNull(request.getSession().getAttribute("messages"));
+    }
+
+    public void testRemove() throws Exception {
+        
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        ServletActionContext.setRequest(request);
+       
+        Builder<${interfaceServiceClassName}> builder = factory.getBuilder(${interfaceServiceClassName}.class);
+        ${interfaceServiceClassName} ${entityClassNameLowerCase}DTO = builder.build();
+             
+        action.set${entityClassName}(${entityClassNameLowerCase}DTO);
+        
+        assertEquals("success", action.save());
+        assertEquals("success", action.delete());
+        assertNotNull(request.getSession().getAttribute("messages"));
+    
+    }
+    
+}

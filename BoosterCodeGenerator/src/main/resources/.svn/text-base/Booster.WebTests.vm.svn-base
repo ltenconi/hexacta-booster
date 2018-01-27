@@ -1,0 +1,93 @@
+<!--${Entity}-START-->
+    <!-- runs ${entity}-related tests -->
+    <target name="PersonTests" depends="Search${Entities},Edit${Entity},Save${Entity},Add${Entity},Delete${Entity}"
+            description="Call and executes all ${entity} test cases (targets)">
+        <echo>Successfully ran all ${Entity} UI tests!</echo>
+    </target>
+
+    <!-- Verify the ${entities} list screen displays without errors -->
+    <target name="Search${Entities}" description="Tests search for and displaying all ${entities}">
+        <webtest name="search${Entities}">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click View ${Entity} link" url="/${entities}.html"/>
+                <verifytitle description="we should see the ${entity}List title"
+                             text=".*${${entity}List.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Verify the edit ${entity} screen displays without errors -->
+    <target name="Edit${Entity}" description="Tests editing an existing ${Entity}'s information">
+        <webtest name="edit${Entity}">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit ${Entity} link" url="/edit${Entity}.html?id=${editId}"/>
+                <verifytitle description="we should see the ${entity}Detail title"
+                             text=".*${${entity}Detail.title}.*" regex="true"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Edit a ${entity} and then save -->
+    <target name="Save${Entity}" description="Tests editing and saving a ${entity}">
+        <webtest name="save${Entity}">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit ${Entity} link" url="/edit${Entity}.html?id=${editId}"/>
+                <verifytitle description="we should see the ${entity}Detail title"
+                             text=".*${${entity}Detail.title}.*" regex="true"/>
+
+				#if (${modificable})
+                <setInputField description="set ${modificablePropertyName}" name="${entity}.${modificablePropertyName}" value=${modificableFieldValue}/>
+				#end
+				
+                <clickbutton label="${button.save}" description="Click Save"/>
+                <verifytitle description="Page re-appears if save successful"
+                             text=".*${${entity}Detail.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${${entity}.updated}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Add a new ${Entity} -->
+    <target name="Add${Entity}" description="Adds a new ${Entity}">
+        <webtest name="add${Entity}">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Add Button" url="/edit${Entity}.html"/>
+                <verifytitle description="we should see the ${entity}Detail title"
+                             text=".*${${entity}Detail.title}.*" regex="true"/>
+
+                #foreach ($field in $addFields.keySet())
+                <setInputField description="set ${field}" name="${entity}.${field}" value=$addFields.get(${field})/>
+                #end
+
+                <clickbutton label="${button.save}" description="Click button 'Save'"/>
+                <verifytitle description="${Entity} List appears if save successful"
+                             text=".*${${entity}List.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${${entity}.added}"/>
+            </steps>
+        </webtest>
+    </target>
+
+    <!-- Delete existing ${Entity} -->
+    <target name="Delete${Entity}" description="Deletes existing ${Entity}">
+        <webtest name="delete${Entity}">
+            &config;
+            <steps>
+                &login;
+                <invoke description="click Edit ${Entity} link" url="/edit${Entity}.html?id=${deleteId}"/>
+                <prepareDialogResponse description="Confirm delete" dialogType="confirm" response="true"/>
+                <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+                <verifyNoDialogResponses/>
+                <verifytitle description="display ${Entity} List" text=".*${${entity}List.title}.*" regex="true"/>
+                <verifytext description="verify success message" text="${${entity}.deleted}"/>
+            </steps>
+        </webtest>
+    </target>
+<!--${Entity}-END-->

@@ -1,0 +1,92 @@
+package ${testTransactionalServicePackage};
+
+import java.util.List;
+import org.dynadto.BuilderFactory;
+import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import ${entityPackage}.${entityClassName};
+import ${daoPackage}.${daoClassName};
+import ${intefaceServicePackage}.${interfaceServiceClassName};
+import ${intefaceDtoPackage}.${interfaceDtoClass};
+import ${mockServicePackage}.${implementationServiceClassName};
+
+
+public class ${transactionalServiceTestClassName} extends AbstractDependencyInjectionSpringContextTests{
+
+	private ${interfaceServiceClassName} ${serviceVarName};
+	private ${daoClassName} ${daoVarName};
+	private BuilderFactory factory;
+		
+	@Override
+	protected void onTearDown() throws Exception {
+		super.onTearDown();
+		setDirty();
+	}
+	
+	@Override
+	protected String[] getConfigLocations() {
+		return new String[] {
+				"test-dataSource-context.xml",
+				"/META-INF/persistence-transaction-context.xml",
+				"/META-INF/persistence-dao-context.xml",
+				"/META-INF/service-transaction-context.xml",
+				"/META-INF/service-exceptionManagement-context.xml",
+				"/META-INF/service-dto-context.xml",
+				"test-service-context.xml"
+				};
+	}
+
+	public void set${interfaceServiceClassName}(${interfaceServiceClassName} ${serviceVarName}) {
+		this.${serviceVarName} = ${serviceVarName};
+	}
+	
+	public void set${daoClassName}(${daoClassName} ${daoVarName}) {
+		this.${daoVarName} = ${daoVarName};
+	}
+	
+	public void setFactory(BuilderFactory factory) {
+		this.factory = factory;
+	}
+
+	public void testRollbackTransaction() throws Exception{
+		
+		${entityClassName} entity = new ${entityClassName}(); 
+				
+		try {
+			${serviceVarName}.add(factory.getBuilder(${interfaceDtoClass}.class).build(entity));
+			fail();
+		} catch (RuntimeException e) {
+			List<${entityClassName}>  listRecovered = ${daoVarName}.findByExample(entity);
+			
+			assertEquals(0, listRecovered.size());
+		}
+	}
+	
+	public void testCommitTransaction() throws Exception{
+		
+		${entityClassName} entity = new ${entityClassName}(); 
+		${daoVarName}.save(entity);
+		${serviceVarName}.delete(entity.getId());
+	
+		List<${entityClassName}>  listRecovered = ${daoVarName}.findByExample(entity);
+		
+		assertEquals(0, listRecovered.size());
+
+	}
+	
+	public void testNotTransactional() throws Exception{
+		
+		${entityClassName} entity = new ${entityClassName}();
+		
+		try {
+			((${implementationServiceClassName})${serviceVarName}).addNotTransactional(factory.getBuilder(${interfaceDtoClass}.class).build(entity));
+			fail();
+		} catch (Exception e) {
+		
+			List<${entityClassName}>  listRecovered = ${daoVarName}.findByExample(entity);
+			
+			assertEquals(1, listRecovered.size());
+		}
+	}
+	
+	
+}

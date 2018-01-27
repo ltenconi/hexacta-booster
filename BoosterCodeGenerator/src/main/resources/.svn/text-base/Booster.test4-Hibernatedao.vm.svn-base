@@ -1,0 +1,196 @@
+#set($modelPackage = $aClass.getPackage())
+#set($entityClassName = $aClass.getSimpleName())
+#set($entityVarName = $entityClassName.toLowerCase())
+package ${daoTestPackage};
+
+import static org.junit.Assert.*;
+
+import java.util.*;
+import java.lang.reflect.Field;
+import java.io.Serializable;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.junit.Test;
+
+import ${modelPackage}.*;
+import ${daoPackage}.*;
+
+public class $daoTestClassName {
+
+	Configuration anHibernateConfiguration = new Configuration();
+	SessionFactory aSessionFactory = anHibernateConfiguration.configure().buildSessionFactory();
+	
+	@Test
+	public void testSave() {
+     
+      Session session = aSessionFactory.openSession();
+   	  try {
+	   	  $entityClassName $entityVarName = new ${entityClassName}(); 
+	      $daoClassName $daoVarName = new ${daoClassName}(session);
+	      ${daoVarName}.save(${entityVarName});
+	      Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+	      field.setAccessible(true);
+	      $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)field.get(${entityVarName}));
+	      assertEquals($entityVarName , ${entityVarName}Recovered);         
+	      
+      } catch (Exception e) {
+			fail(e.getMessage());
+	  } finally {
+			session.close();
+	  }      
+   }
+   
+   @Test
+   public void testFindById() {
+   
+      Session session = aSessionFactory.openSession();
+      try {	      
+	      $entityClassName $entityVarName = new ${entityClassName}(); 
+	   	  $daoClassName $daoVarName = new ${daoClassName}(session);
+	   	  ${daoVarName}.save(${entityVarName});
+	   	  Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+	   	  field.setAccessible(true);
+	   	  $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)field.get(${entityVarName}));
+	      assertEquals($entityVarName , ${entityVarName}Recovered);
+	      
+      } catch (Exception e) {
+			fail(e.getMessage());
+	  } finally {
+			session.close();
+	  }  
+   }
+   
+   @Test
+   public void testDelete() {
+    
+     Session session = aSessionFactory.openSession();
+     try {	     
+	     $entityClassName $entityVarName = new ${entityClassName}(); 
+	     $daoClassName $daoVarName = new ${daoClassName}(session);
+	     ${daoVarName}.save(${entityVarName});
+	     ${daoVarName}.delete(${entityVarName});
+	     Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+	     field.setAccessible(true);
+	     $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)field.get(${entityVarName}));
+	     assertNull(${entityVarName}Recovered);
+     
+     } catch (Exception e) {
+			fail(e.getMessage());
+	 } finally {
+			session.close();
+	 }
+   }
+   
+   @Test
+   public void testUpdate() {
+   
+   #if ($modificable == false)
+      assert(true);
+   #else   
+   
+      Session session = aSessionFactory.openSession();
+      try {
+	      $entityClassName $entityVarName = new ${entityClassName}();  			
+	      $daoClassName $daoVarName = new ${daoClassName}(session);
+	      ${daoVarName}.save(${entityVarName});
+	      Field idField = ${idContainerClass}.class.getDeclaredField("${entityId}");
+	      idField.setAccessible(true);
+	      $entityClassName ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)idField.get(${entityVarName}));	
+	   
+	      Field modificableField =  ${entityVarName}Recovered.getClass().getDeclaredField("${modificablePropertyName}");
+	      modificableField.setAccessible(true);
+	      modificableField.set( ${entityVarName}Recovered, $fieldValue );
+	      ${daoVarName}.update(${entityVarName}Recovered);
+	
+	      $entityClassName ${entityVarName}Changed = ${daoVarName}.findById((Serializable)idField.get(${entityVarName}Recovered));
+	      Object valueRecovered = modificableField.get(${entityVarName}Recovered);
+	      Object valueChanged = modificableField.get(${entityVarName}Changed);
+	
+	      assertEquals(valueRecovered,valueChanged);
+      
+      } catch (Exception e) {
+		 	fail(e.getMessage());
+	  } finally{
+			session.close();
+	  }      
+    #end   
+   }
+   
+   @Test
+   public void testFindAll() {
+   
+      Session session = aSessionFactory.openSession();
+      $entityClassName ${entityVarName}1 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}2 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}3 = new ${entityClassName}();
+      $daoClassName $daoVarName = new ${daoClassName}(session);
+      ${daoVarName}.save(${entityVarName}1);
+      ${daoVarName}.save(${entityVarName}2);
+      ${daoVarName}.save(${entityVarName}3);
+      List<${entityClassName}> ${entityVarName}List = ${daoVarName}.findAll();
+      assertEquals(3,${entityVarName}List.size());
+	  session.close();          
+   }
+   
+   @Test
+   public void testDeleteById() {
+   
+      Session session = aSessionFactory.openSession();
+	  try {
+		  $entityClassName $entityVarName = new ${entityClassName}();
+		  $daoClassName $daoVarName = new ${daoClassName}(session);  			
+	      ${daoVarName}.save(${entityVarName});	
+	      Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+	      field.setAccessible(true);
+	      Serializable id = (Serializable)field.get(${entityVarName});
+	      $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById(id); 
+	      assertEquals($entityVarName , ${entityVarName}Recovered);
+	           
+	      ${daoVarName}.deleteById(id);
+	      ${entityVarName}Recovered = ${daoVarName}.findById(id);
+	      assertNull(${entityVarName}Recovered);
+      
+      } catch (Exception e) {
+			fail(e.getMessage());
+	  } finally{
+			session.close();
+	  }      
+   }
+   
+   @Test
+   public void testCount() {
+   
+      Session session = aSessionFactory.openSession();
+      $entityClassName ${entityVarName}1 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}2 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}3 = new ${entityClassName}();
+      $daoClassName $daoVarName = new ${daoClassName}(session);
+      ${daoVarName}.save(${entityVarName}1);
+      ${daoVarName}.save(${entityVarName}2);
+      ${daoVarName}.save(${entityVarName}3);
+      int count = ${daoVarName}.count();
+      assertEquals(3,count);
+      session.close();      
+   }
+   
+   @Test
+   public void testFindByExample() {
+   
+      Session session = aSessionFactory.openSession();
+      
+      $daoClassName $daoVarName = new ${daoClassName}(session);
+      $entityClassName ${entityVarName}1 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}2 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}3 = new ${entityClassName}();
+      ${daoVarName}.save(${entityVarName}1);
+      ${daoVarName}.save(${entityVarName}2);
+      ${daoVarName}.save(${entityVarName}3);
+      
+      $entityClassName example = ${entityVarName}1;
+      List<${entityClassName}> list = ${daoVarName}.findByExample(example);
+      assertTrue(list.contains(example));
+      session.close();
+   }     
+ }

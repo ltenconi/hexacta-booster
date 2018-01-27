@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring
+END
+ServiceMockImplementationGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/ServiceMockImplementationGenerator.java
+END
+ServiceInterfaceGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/ServiceInterfaceGenerator.java
+END
+TransactionalTestGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/TransactionalTestGenerator.java
+END
+SpringServiceTestGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/SpringServiceTestGenerator.java
+END
+SpringAbstractServiceJUnit3TestGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/SpringAbstractServiceJUnit3TestGenerator.java
+END
+SpringAbstractServiceJUnit4TestGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/SpringAbstractServiceJUnit4TestGenerator.java
+END
+ServiceImplementationGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/ServiceImplementationGenerator.java
+END
+SpringServiceTest4Generator.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/service/spring/SpringServiceTest4Generator.java
+END

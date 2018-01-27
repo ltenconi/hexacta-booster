@@ -1,0 +1,13 @@
+package ${daoTestPackage};
+
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:/test-dataSource-context.xml",
+        "classpath:/META-INF/persistence-dao-context.xml", "classpath:/META-INF/persistence-transaction-context.xml" })
+public abstract class AbstractDAOTest4 extends AbstractTransactionalJUnit4SpringContextTests {
+
+}

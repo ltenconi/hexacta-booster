@@ -1,0 +1,120 @@
+package ${projectGroupId}.persistence.dao;
+
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+import org.hibernate.Transaction;
+import org.hibernate.Query;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
+
+public abstract class GenericDAO<T> {
+
+	 protected Class<T> persistentClass;
+
+    protected Session session;
+
+    protected abstract Class<T> getDomainClass();
+
+    public void save(final T entity) {
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.save(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+    }
+
+    public void delete(final T entity) {
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.delete(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+    }
+
+    public void deleteById(final Serializable id) {
+
+        Transaction transaction = session.beginTransaction();
+        try {
+            T obj = this.findById(id);
+            session.delete(obj);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+    }
+
+    public void update(final T entity) {
+
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.update(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public T findById(final Serializable id) {
+        return (T) getSession().get(this.persistentClass, id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> findAll() {
+
+        Query query = session.createQuery("from " + persistentClass.getName());
+        return query.list();
+
+        // return findByCriteria(new LinkedList());
+    }
+
+    public void setSession(final Session s) {
+        this.session = s;
+    }
+
+    protected Session getSession() {
+        if (session == null)
+            throw new IllegalStateException("Session has not been set on DAO before usage");
+        return session;
+    }
+
+    @SuppressWarnings("unchecked")
+    public int count() {
+
+        Query query = session.createQuery("select count(*) from " + persistentClass.getName());
+        return ((Long) query.list().get(0)).intValue();
+
+        // List<T> list = session..find("select count(*) from " +
+        // persistentClass.getName() + " o");
+        // Long count = (Long) list.get(0);
+        // return count.intValue();
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> findByExample(final T exampleObject) {
+
+        Criteria criteria = session.createCriteria(persistentClass);
+        Example exampleRestriction = Example.create(exampleObject);
+        criteria.add(exampleRestriction);
+        return criteria.list();
+
+    }
+
+    @SuppressWarnings("unchecked")
+    protected List<T> findByCriteria(final List<Criterion> criteria) {
+        Criteria crit = getSession().createCriteria(this.persistentClass);
+        for (Criterion c : criteria) {
+            crit.add(c);
+        }
+        return crit.list();
+    }
+
+}

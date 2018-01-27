@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration/template
+END
+RemoteTemplatePeristerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration/template/RemoteTemplatePeristerTest.java
+END
+LocalTemplatePersisterTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration/template/LocalTemplatePersisterTest.java
+END
+VelocityMetaTemplateEngineTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration/template/VelocityMetaTemplateEngineTest.java
+END
+MetaTemplateSystemTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration/template/MetaTemplateSystemTest.java
+END
+MetaTemplateBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration/template/MetaTemplateBuilderTest.java
+END

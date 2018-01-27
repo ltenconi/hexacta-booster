@@ -1,0 +1,24 @@
+#set($package = $aClass.getPackage())
+#set($entityClassName = $aClass.getSimpleName())
+package ${daoPackage};
+
+import ${package}.${entityClassName};
+import org.hibernate.Session;
+
+public class ${entityClassName}DAO extends GenericDAO<$entityClassName>{
+
+	    
+	    public ${entityClassName}DAO(Session session){
+	       
+	       this.persistentClass = getDomainClass();
+	       this.session = session;
+	    
+	    }
+	    
+	    @Override
+      	protected Class<$entityClassName> getDomainClass() {
+	         return ${entityClassName}.class;
+	    }
+
+
+}

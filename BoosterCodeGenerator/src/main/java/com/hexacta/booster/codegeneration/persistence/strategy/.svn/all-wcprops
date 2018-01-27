@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/persistence/strategy
+END
+MappingHierarchyCuttingStrategy.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/persistence/strategy/MappingHierarchyCuttingStrategy.java
+END
+EntityBranchStrategy.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/persistence/strategy/EntityBranchStrategy.java
+END
+NoCuttingStrategy.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/persistence/strategy/NoCuttingStrategy.java
+END

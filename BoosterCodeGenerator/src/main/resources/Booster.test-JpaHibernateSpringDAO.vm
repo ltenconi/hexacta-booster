@@ -1,0 +1,144 @@
+#set($modelPackage = $aClass.getPackage())
+#set($entityClassName = $aClass.getSimpleName())
+#set($entityVarName = $entityClassName.toLowerCase())
+package ${daoTestPackage};
+
+import java.lang.reflect.Field;
+import java.util.*;
+import java.io.Serializable;
+import ${modelPackage}.*;
+import ${modelPackage}.daos.*;
+
+
+public class $daoTestClassName extends AbstractDAOTest{
+
+   private $daoClassName $daoVarName;
+
+   /**
+   * Spring will automatically inject DAO object on startup
+   * @param $daoVarName
+   */
+
+   public void set${daoClassName}($daoClassName ${daoVarName}) {
+	this.${daoVarName} =  ${daoVarName};
+   }
+   
+   public void testSave() throws Exception{
+   
+   	$entityClassName $entityVarName = new ${entityClassName}(); 
+      ${daoVarName}.save(${entityVarName});
+      Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+      field.setAccessible(true);
+      $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)field.get(${entityVarName}));
+      assertEquals($entityVarName , ${entityVarName}Recovered);
+         
+   }
+   
+   public void testFindById() throws Exception{
+      
+     	  $entityClassName $entityVarName = new ${entityClassName}(); 
+   	  ${daoVarName}.save(${entityVarName});
+   	  Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+   	  field.setAccessible(true);
+   	  $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)field.get(${entityVarName}));
+      assertEquals($entityVarName , ${entityVarName}Recovered);
+   
+   }
+   
+   public void testDelete() throws Exception{
+   
+     $entityClassName $entityVarName = new ${entityClassName}(); 
+     ${daoVarName}.save(${entityVarName});
+     ${daoVarName}.delete(${entityVarName});
+     Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+     field.setAccessible(true);
+     $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)field.get(${entityVarName}));
+     assertNull(${entityVarName}Recovered);
+        
+   }
+   
+   public void testUpdate() throws Exception{
+   
+   #if ($modificable == false)
+      assert(true);
+   #else   
+    
+      $entityClassName $entityVarName = new ${entityClassName}();  			
+      ${daoVarName}.save(${entityVarName});
+      Field idField = ${idContainerClass}.class.getDeclaredField("${entityId}");
+      idField.setAccessible(true);
+      $entityClassName ${entityVarName}Recovered = ${daoVarName}.findById((Serializable)idField.get(${entityVarName}));	
+   
+      Field modificableField =  ${entityVarName}Recovered.getClass().getDeclaredField("${modificablePropertyName}");
+      modificableField.setAccessible(true);
+      modificableField.set( ${entityVarName}Recovered, $fieldValue );
+      ${daoVarName}.update(${entityVarName}Recovered);
+
+      $entityClassName ${entityVarName}Changed = ${daoVarName}.findById((Serializable)idField.get(${entityVarName}Recovered));
+      Object valueRecovered = modificableField.get(${entityVarName}Recovered);
+      Object valueChanged = modificableField.get(${entityVarName}Changed);
+
+      assertEquals(valueRecovered,valueChanged);
+      
+    #end
+   
+   }
+   
+   public void testFindAll() throws Exception{
+   
+      $entityClassName ${entityVarName}1 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}2 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}3 = new ${entityClassName}();
+      ${daoVarName}.save(${entityVarName}1);
+      ${daoVarName}.save(${entityVarName}2);
+      ${daoVarName}.save(${entityVarName}3);
+      List<${entityClassName}> ${entityVarName}List = ${daoVarName}.findAll();
+      assertEquals(3,${entityVarName}List.size());
+          
+   }
+   
+      public void testDeleteById()throws Exception{
+   
+	  $entityClassName $entityVarName = new ${entityClassName}();  			
+      ${daoVarName}.save(${entityVarName});	
+      Field field = ${idContainerClass}.class.getDeclaredField("${entityId}");
+      field.setAccessible(true);
+      Serializable id = (Serializable)field.get(${entityVarName});
+      $entityClassName  ${entityVarName}Recovered = ${daoVarName}.findById(id); 
+      assertEquals($entityVarName , ${entityVarName}Recovered);
+           
+      ${daoVarName}.deleteById(id);
+      ${entityVarName}Recovered = ${daoVarName}.findById(id);
+      assertNull(${entityVarName}Recovered);
+   
+   }
+   
+   public void testCount() throws Exception{
+   
+      $entityClassName ${entityVarName}1 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}2 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}3 = new ${entityClassName}();
+      ${daoVarName}.save(${entityVarName}1);
+      ${daoVarName}.save(${entityVarName}2);
+      ${daoVarName}.save(${entityVarName}3);
+      int count = ${daoVarName}.count();
+      assertEquals(3,count);
+      
+   }
+   
+   public void testFindByExample() throws Exception{
+   
+      $entityClassName ${entityVarName}1 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}2 = new ${entityClassName}(); 
+      $entityClassName ${entityVarName}3 = new ${entityClassName}();
+      ${daoVarName}.save(${entityVarName}1);
+      ${daoVarName}.save(${entityVarName}2);
+      ${daoVarName}.save(${entityVarName}3);
+      
+      $entityClassName example = ${entityVarName}1;
+      List<${entityClassName}> list = ${daoVarName}.findByExample(example);
+      assertTrue(list.contains(example));
+      
+   }
+     
+ }

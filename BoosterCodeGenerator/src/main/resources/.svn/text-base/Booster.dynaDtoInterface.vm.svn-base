@@ -1,0 +1,12 @@
+package ${dtoPackage};
+
+${imports}
+import org.dynadto.DTO;
+
+public interface I${entityClass.getSimpleName()}DTO extends DTO {
+
+${getters}
+
+${setters}
+		
+}

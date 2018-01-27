@@ -1,0 +1,21 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+#foreach($field in ${fields})
+#if ($field.getName() != "id")
+#set ($type = $field.getType().getName())
+#if ($type != "boolean" && $type != "java.lang.Boolean")
+	<field name="${entity}.${field.getName()}">
+#if ($type == "java.lang.String")
+		<field-validator type="requiredstring">
+#else
+		<field-validator type="required">
+#end
+	            <message key="errors.required"/>
+		</field-validator>
+	</field>
+	
+#end
+#end
+#end
+</validators> 

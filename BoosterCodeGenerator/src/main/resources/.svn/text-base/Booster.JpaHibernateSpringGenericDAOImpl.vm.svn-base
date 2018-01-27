@@ -1,0 +1,80 @@
+package ${projectGroupId}.dao.impl;
+
+import com.hexacta.dao.GenericDao;
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.springframework.orm.jpa.JpaCallback;
+import org.springframework.orm.jpa.support.JpaDaoSupport;
+
+public abstract class JpaGenericDAO<T> extends JpaDaoSupport implements GenericDao<T> {
+
+	protected Class<T> persistentClass = getDomainClass();
+
+	protected abstract Class<T> getDomainClass();
+
+	public void save(T entity){
+		getJpaTemplate().persist(entity);		
+	}
+
+	public void delete(T entity){
+		getJpaTemplate().remove(entity);		
+	}
+
+	public void update(T entity){		
+		getJpaTemplate().merge(entity);
+	}
+
+	public T findById(Serializable id){
+		return ((T) getJpaTemplate().find(this.persistentClass, id));
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> findAll(){
+		List<T> entities = new ArrayList<T>(); 
+		try { 
+			String s = "select c from " + persistentClass.getSimpleName() + " c"; 
+			entities = getJpaTemplate().find(s); 
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+		} 
+		return entities; 
+	}
+
+	public void deleteById(Serializable id) {
+		T obj = this.findById(id);
+		getJpaTemplate().remove(obj);
+	}	
+
+	@SuppressWarnings("unchecked")
+	public int count() {
+		List<T> list = getJpaTemplate().find(
+				"select count(*) from " + persistentClass.getName() + " o");
+		Long count = (Long) list.get(0);
+		return count.intValue();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> findByExample(final T exampleObject) {
+
+		return (List<T>) (getJpaTemplate().execute(new JpaCallback() {
+			public Object doInJpa(EntityManager entityManager) throws PersistenceException {
+				Session hibernateSession =  (Session) entityManager.getDelegate();  
+				Criteria criteria = hibernateSession.createCriteria(persistentClass);  
+				criteria.add(Example.create(exampleObject));		
+
+				return criteria.list();
+			}
+		}));     
+	}
+
+}

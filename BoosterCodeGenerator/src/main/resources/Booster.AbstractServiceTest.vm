@@ -1,0 +1,28 @@
+package ${serviceTestPackage};
+
+import org.dynadto.BuilderFactory;
+import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+
+public abstract class AbstractServiceTest extends AbstractDependencyInjectionSpringContextTests {
+
+    protected BuilderFactory factory;
+
+    @Override
+    protected void onTearDown() throws Exception {
+        super.onTearDown();
+        setDirty();
+    }
+
+    @Override
+    protected String[] getConfigLocations() {
+        return new String[] { "test-dataSource-context.xml", "/META-INF/persistence-transaction-context.xml",
+                "/META-INF/persistence-dao-context.xml", "/META-INF/service-transaction-context.xml",
+                "/META-INF/service-exceptionManagement-context.xml", "/META-INF/service-dto-context.xml",
+                "/META-INF/service-context.xml" };
+    }
+
+    public void setFactory(final BuilderFactory factory) {
+        this.factory = factory;
+    }
+
+}

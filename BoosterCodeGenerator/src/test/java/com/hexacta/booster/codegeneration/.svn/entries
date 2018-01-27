@@ -1,0 +1,77 @@
+10
+
+dir
+116
+http://hexacta-booster.googlecode.com/svn/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/codegeneration
+http://hexacta-booster.googlecode.com/svn
+
+
+
+2009-06-22T19:21:06.518121Z
+25
+ltenconi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dee4776c-5f41-11de-a55d-e76e375ae706
+
+TemplatesNamesTest.java
+file
+
+
+
+
+2016-03-17T22:20:52.181264Z
+e5194e83f5f440659516ec1805913317
+2009-06-22T19:21:06.518121Z
+25
+ltenconi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+626
+
+persistence
+dir
+
+metamodel
+dir
+
+view
+dir
+
+template
+dir
+
+service
+dir
+

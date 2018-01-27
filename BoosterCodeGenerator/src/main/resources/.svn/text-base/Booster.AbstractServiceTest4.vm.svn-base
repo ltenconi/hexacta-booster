@@ -1,0 +1,23 @@
+package ${serviceTestPackage};
+
+import org.dynadto.BuilderFactory;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:/test-dataSource-context.xml",
+        "/META-INF/persistence-transaction-context.xml", "/META-INF/persistence-dao-context.xml",
+        "/META-INF/service-transaction-context.xml", "/META-INF/service-exceptionManagement-context.xml",
+        "/META-INF/service-dto-context.xml", "/META-INF/service-context.xml" })
+public abstract class AbstractServiceTest4 {
+
+    @Autowired
+    protected BuilderFactory factory;
+
+    public void setFactory(final BuilderFactory factory) {
+        this.factory = factory;
+    }
+
+}

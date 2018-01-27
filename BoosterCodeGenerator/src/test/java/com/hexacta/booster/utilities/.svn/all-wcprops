@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities
+END
+TestGenerationHelperTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/TestGenerationHelperTest.java
+END
+IdFieldAssignerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/IdFieldAssignerTest.java
+END
+JavaClassNameBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/JavaClassNameBuilderTest.java
+END
+JavaClassFileNameBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/JavaClassFileNameBuilderTest.java
+END
+VarNameBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/VarNameBuilderTest.java
+END
+TextFileWriterTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/TextFileWriterTest.java
+END
+PackageBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/PackageBuilderTest.java
+END
+PathBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/test/java/com/hexacta/booster/utilities/PathBuilderTest.java
+END

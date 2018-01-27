@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search
+END
+SearchCriteria.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search/SearchCriteria.java
+END
+ContentCriterion.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search/ContentCriterion.java
+END
+CategoryCriterion.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search/CategoryCriterion.java
+END
+NameCriterion.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search/NameCriterion.java
+END
+DescriptionCriterion.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search/DescriptionCriterion.java
+END
+SearchCriterion.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/!svn/ver/25/trunk/BoosterCodeGenerator/src/main/java/com/hexacta/booster/codegeneration/template/search/SearchCriterion.java
+END

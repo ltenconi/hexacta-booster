@@ -1,0 +1,20 @@
+#set($comment = "#")
+${comment} -- ${Entity}-START	
+#foreach($field in ${fields})
+#set($firstLetter = ${field.getName().substring(0, 1).toUpperCase()})
+#set($restOf = ${field.getName().substring(1, $field.getName().length())})
+${entity}.${field.getName()}= $firstLetter$restOf
+#end
+
+${entity}.added=${Entity} se agreg\u00F3 exitosamente
+${entity}.updated=${Entity} se actualiz\u00F3 exitosamente.
+${entity}.deleted=${Entity} se borr\u00F3 exitosamente.
+
+${entity}List.title=${Entity}
+${entity}List.heading=${Entities}
+${entity}List.${entity}=${entity}
+${entity}List.${entities}=${entities}
+
+${entity}Detail.title=Detalle de ${Entity}
+${entity}Detail.heading=Informaci\u00F3n de ${Entity}
+${comment} -- ${Entity}-END

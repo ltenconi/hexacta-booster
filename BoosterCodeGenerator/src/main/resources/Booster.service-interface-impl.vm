@@ -1,0 +1,94 @@
+package ${serviceImplPackage};
+
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.springframework.security.annotation.Secured;
+import org.dynadto.BuilderFactory;
+import org.springframework.transaction.annotation.Transactional;
+
+import ${entityPackage}.${entityClassName};
+import ${daoPackage}.${daoClassName};
+import ${intefaceServicePackage}.${interfaceServiceClassName};
+import ${intefaceDtoPackage}.${interfaceDtoClass};
+
+import com.hexacta.mapper.DTOtoEntityMapper;
+
+@Secured("ROLE_ADMIN")
+public class ${serviceImplClassName} implements ${interfaceServiceClassName}{
+	
+	private ${daoClassName} ${daoVarName};
+	private BuilderFactory factory;
+	private DTOtoEntityMapper beanMapper;
+	
+			
+	public void set${daoClassName}(${daoClassName} ${daoVarName}) {
+		this.${daoVarName} = ${daoVarName};
+	}
+	
+	public void setFactory(BuilderFactory factory) {
+		this.factory = factory;
+	}
+
+	public void setBeanMapper(final DTOtoEntityMapper beanMapper) {
+       		this.beanMapper = beanMapper;
+    	}
+	
+	@Transactional(readOnly = false)
+	public void add(${interfaceDtoClass} ${dtoVarName}){
+		${entityClassName} ${entityVarName}= new ${entityClassName}(); 
+		
+		// map DTO to entity
+		beanMapper.map(${dtoVarName}, ${entityVarName});
+		
+		${daoVarName}.save(${entityVarName});
+		${dtoVarName}.setId(${entityVarName}.getId());
+			
+	}
+
+	@Transactional(readOnly = false)
+	public void delete(Serializable id){
+		
+		${entityClassName} ${entityVarName}= ${daoVarName}.findById(id);
+		${daoVarName}.delete(${entityVarName});
+		
+	}
+
+	@Transactional(readOnly = false)
+	public void update(${interfaceDtoClass} ${dtoVarName}){
+		
+		${entityClassName} ${entityVarName}= ${daoVarName}.findById(${dtoVarName}.getId());
+		
+		// synchronization between DTO and entity
+		beanMapper.map(${dtoVarName}, ${entityVarName});
+				
+		${daoVarName}.update(${entityVarName});
+		
+	}
+	
+	@Transactional(readOnly = true)	
+	public ${interfaceDtoClass} retrieve(Serializable id){
+		${entityClassName} ${entityVarName}	= ${daoVarName}.findById(id);
+		if (${entityVarName} != null) {
+			return (factory.getBuilder(${interfaceDtoClass}.class)
+					.build(${entityVarName}));
+		} else {
+			return null;
+		}
+	}
+
+	@Transactional(readOnly = true)	
+	public List<${interfaceDtoClass}> retrieveAll() {
+
+		List<${entityClassName}> entityList = ${daoVarName}.findAll();
+		List<${interfaceDtoClass}> dtoList = new LinkedList<${interfaceDtoClass}>();
+		for (${entityClassName} entity : entityList) {
+			dtoList.add(factory.getBuilder(${interfaceDtoClass}.class)
+					.build(entity));
+		}
+		
+		return dtoList;		
+	}
+	
+}
